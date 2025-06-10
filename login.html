@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FitGym – Member Access</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      margin: 0; padding: 0; color: #333;
+    }
+    .navbar-brand { font-size: 1.5rem; font-weight: 600; }
+    .nav-tabs .nav-link { font-weight: 500; color: #495057; transition: color 0.2s; }
+    .nav-tabs .nav-link:hover { color: #0d6efd; }
+    .nav-tabs .nav-link.active { color: #0d6efd; font-weight: 600; }
+    .card { border: none; border-radius: 8px; }
+    .card .card-title { color: #0d6efd; font-weight: 600; }
+    .card-body { background-color: #fff; border-radius: 8px; }
+    .form-control { border: 1px solid #ced4da; border-radius: 4px; font-size: 0.95rem; }
+    .form-control:focus { box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25); }
+    .btn-primary {
+      border-radius: 50px; padding: 0.6rem 1.2rem; font-size: 1rem;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover {
+      background-color: #0b5ed7; transform: translateY(-2px);
+    }
+    .btn-outline-secondary { border-radius: 50px; padding: 0.4rem 1rem; font-size: 0.9rem; }
+    .form-check-label a { color: #0d6efd; text-decoration: none; }
+    .form-check-label a:hover { text-decoration: underline; }
+    footer { background-color: #212529; color: #adb5bd; }
+    footer p { margin: 0.2rem 0; }
+    footer a { color: #adb5bd; text-decoration: none; transition: color 0.2s; }
+    footer a:hover { color: #fff; text-decoration: underline; }
+    .text-center { text-align: center; }
+    .my-5 { margin-top: 3rem !important; margin-bottom: 3rem !important; }
+    @media (max-width: 575.98px) {
+      .card { margin: 0 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">FitGym</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Tabs Container -->
+  <div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <!-- Tab Navigation -->
+        <ul class="nav nav-tabs justify-content-center mb-4" id="authTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link active"
+              id="login-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#login-pane"
+              type="button"
+              role="tab"
+              aria-controls="login-pane"
+              aria-selected="true"
+            >
+              Login
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="signup-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#signup-pane"
+              type="button"
+              role="tab"
+              aria-controls="signup-pane"
+              aria-selected="false"
+            >
+              Sign Up
+            </button>
+          </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="authTabContent">
+          <!-- Login Pane -->
+          <div
+            class="tab-pane fade show active"
+            id="login-pane"
+            role="tabpanel"
+            aria-labelledby="login-tab"
+          >
+            <div class="card shadow-sm">
+              <div class="card-body p-4">
+                <h3 class="card-title text-center mb-4">Member Login</h3>
+                <form id="loginForm" novalidate>
+                  <div class="mb-3">
+                    <label for="loginEmail" class="form-label">Email address</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="loginEmail"
+                      name="email"
+                      placeholder="you@example.com"
+                      required
+                    />
+                    <div class="invalid-feedback">Please enter a valid email.</div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="loginPassword" class="form-label">Password</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="loginPassword"
+                      name="password"
+                      placeholder="••••••••"
+                      required
+                      minlength="6"
+                    />
+                    <div class="invalid-feedback">Password must be at least 6 characters.</div>
+                  </div>
+                  <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Log In</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sign Up Pane -->
+          <div
+            class="tab-pane fade"
+            id="signup-pane"
+            role="tabpanel"
+            aria-labelledby="signup-tab"
+          >
+            <div class="card shadow-sm">
+              <div class="card-body p-4">
+                <h3 class="card-title text-center mb-4">Create an Account</h3>
+                <form id="signupForm" novalidate>
+                  <div class="mb-3">
+                    <label for="fullName" class="form-label">Full Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="fullName"
+                      name="fullname"
+                      placeholder="John Doe"
+                      required
+                      minlength="3"
+                    />
+                    <div class="invalid-feedback">Please enter your full name (min 3 characters).</div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="signupEmail" class="form-label">Email address</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="signupEmail"
+                      name="email"
+                      placeholder="you@example.com"
+                      required
+                    />
+                    <div class="invalid-feedback">Please enter a valid email.</div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="signupPassword" class="form-label">Password</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="signupPassword"
+                      name="password"
+                      placeholder="••••••••"
+                      required
+                      minlength="6"
+                    />
+                    <div class="invalid-feedback">Password must be at least 6 characters.</div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="confirmPassword"
+                      name="confirm_password"
+                      placeholder="••••••••"
+                      required
+                    />
+                    <div class="invalid-feedback" id="confirmPasswordFeedback">Passwords do not match.</div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label d-block">Gender</label>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gender"
+                        id="genderMale"
+                        value="Male"
+                        required
+                      />
+                      <label class="form-check-label" for="genderMale">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gender"
+                        id="genderFemale"
+                        value="Female"
+                        required
+                      />
+                      <label class="form-check-label" for="genderFemale">Female</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gender"
+                        id="genderOther"
+                        value="Other"
+                        required
+                      />
+                      <label class="form-check-label" for="genderOther">Other</label>
+                    </div>
+                    <div class="invalid-feedback d-block" id="genderFeedback" style="display:none;">Please select a gender.</div>
+                  </div>
+
+                  <div class="form-check mb-3">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="termsCheckbox"
+                      name="termsCheckbox"
+                      required
+                    />
+                    <label class="form-check-label" for="termsCheckbox">
+                      I agree to the <a href="#">Terms &amp; Conditions</a>
+                    </label>
+                    <div class="invalid-feedback d-block" id="termsFeedback" style="display:none;">You must agree before submitting.</div>
+                  </div>
+
+                  <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Tab Content -->
+      </div>
+    </div>
+  </div>
+
+  <a href="admin-login.html" 
+   class="btn btn-danger position-fixed" 
+   style="bottom: 20px; right: 20px; z-index: 1050; border-radius: 50px; padding: 10px 20px;">
+  Admin Login
+  </a>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Custom JS for form submission -->
+  <script>
+    const API_BASE = 'http://localhost:5000/api/auth';  // change to your backend URL
+
+    // Helper: toggle validity styles and feedback visibility
+    function setValidity(el, valid, feedbackId) {
+      if (valid) {
+        el.classList.remove('is-invalid');
+        if (feedbackId) document.getElementById(feedbackId).style.display = 'none';
+      } else {
+        el.classList.add('is-invalid');
+        if (feedbackId) document.getElementById(feedbackId).style.display = 'block';
+      }
+    }
+
+    function showError(message) {
+      alert('Error: ' + message);
+    }
+
+    // Login form submit handler
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const email = this.loginEmail.value.trim();
+      const password = this.loginPassword.value.trim();
+
+      const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      const passwordValid = password.length >= 6;
+
+      setValidity(this.loginEmail, emailValid);
+      setValidity(this.loginPassword, passwordValid);
+
+      if (!emailValid || !passwordValid) return;
+
+      try {
+        const res = await fetch(`${API_BASE}/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          showError(data.message || 'Login failed');
+          return;
+        }
+
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+
+        alert('Login successful! Redirecting...');
+        window.location.href = 'home.html'; 
+      } catch (err) {
+        showError('Network or server error');
+        console.error(err);
+      }
+    });
+
+    // Signup form submit handler
+    document.getElementById('signupForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const fullname = this.fullName.value.trim();
+      const email = this.signupEmail.value.trim();
+      const password = this.signupPassword.value.trim();
+      const confirmPassword = this.confirmPassword.value.trim();
+      const genderInputs = Array.from(this.gender);  // convert to array
+      const termsChecked = this.termsCheckbox.checked;
+
+      const fullnameValid = fullname.length >= 3;
+      setValidity(this.fullName, fullnameValid);
+
+      const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      setValidity(this.signupEmail, emailValid);
+
+      const passwordValid = password.length >= 6;
+      setValidity(this.signupPassword, passwordValid);
+
+      const confirmPasswordValid = password === confirmPassword && confirmPassword !== '';
+      setValidity(this.confirmPassword, confirmPasswordValid, 'confirmPasswordFeedback');
+
+      let genderSelected = genderInputs.some(i => i.checked);
+      document.getElementById('genderFeedback').style.display = genderSelected ? 'none' : 'block';
+
+      document.getElementById('termsFeedback').style.display = termsChecked ? 'none' : 'block';
+
+      if (!fullnameValid || !emailValid || !passwordValid || !confirmPasswordValid || !genderSelected || !termsChecked) return;
+
+      try {
+        const genderValue = genderInputs.find(i => i.checked).value;
+        const res = await fetch(`${API_BASE}/signup`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fullname, email, password, gender: genderValue }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          showError(data.message || 'Signup failed');
+          return;
+        }
+
+        alert('Signup successful! You can now login.');
+        this.reset();
+
+        // Switch to login tab
+        const loginTab = document.getElementById('login-tab');
+        const tab = new bootstrap.Tab(loginTab);
+        tab.show();
+      } catch (err) {
+        showError('Network or server error');
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>

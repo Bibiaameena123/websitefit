@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FitGym – Membership</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+    }
+    .navbar-brand {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .membership-card {
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      transition: box-shadow 0.2s;
+    }
+    .membership-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .price {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #0d6efd;
+    }
+    .payment-section {
+      background-color: #fff;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+    .payment-section img {
+      display: block;
+      margin: 0 auto 1rem;
+      max-width: 200px;
+    }
+    footer {
+      background-color: #212529;
+      color: #adb5bd;
+    }
+    footer a {
+      color: #adb5bd;
+      text-decoration: none;
+    }
+    footer a:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+    /* Sidebar height to fill viewport */
+    .sidebar {
+      min-height: 100vh;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">FitGym</a>
+    </div>
+  </nav>
+
+  <!-- ===== Sidebar + Main Content ===== -->
+  <div class="container-fluid mt-4">
+    <div class="row">
+      <!-- Sidebar (collapsible on mobile) -->
+      <nav
+        class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse"
+        id="sidebarMenu"
+      >
+        <div class="position-sticky pt-3">
+          <div class="list-group">
+            <a href="index.html" class="list-group-item list-group-item-action">Home</a>
+            <a href="home.html#Services" class="list-group-item list-group-item-action">Services</a>
+            <a href="training.html" class="list-group-item list-group-item-action active">Training</a>
+            <a href="membership.html" class="list-group-item list-group-item-action">Membership</a>
+            <a href="index.html#bmi-calculator" class="list-group-item list-group-item-action">BMI Calculator</a>
+            <a href="profile.html" class="list-group-item list-group-item-action">Profile</a>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Toggle button (visible only on small screens) -->
+      <button
+        class="btn btn-primary d-md-none mb-3 ms-3"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#sidebarMenu"
+        aria-controls="sidebarMenu"
+        aria-expanded="false"
+        aria-label="Toggle sidebar"
+      >
+        ☰ Menu
+      </button>
+
+      <!-- Main Content -->
+      <main class="col-md-9 col-lg-10 px-md-4">
+        <h2 class="section-title text-center">Membership Plans</h2>
+        <p class="text-center mt-2 mb-4">Choose the plan and submit your payment with details below.</p>
+
+        <div class="row g-4">
+          <!-- BASIC PLAN -->
+          <div class="col-md-4">
+            <div class="card membership-card h-100">
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title text-center">Basic Plan</h5>
+                <p class="price text-center">₹499 / Month</p>
+                <ul>
+                  <li>Access to gym equipment</li>
+                  <li>3 Group classes/week</li>
+                  <li>Locker facility</li>
+                </ul>
+                <button class="btn btn-primary mt-auto" data-bs-toggle="collapse" data-bs-target="#collapseBasic">Select Plan</button>
+
+                <div class="collapse payment-section" id="collapseBasic">
+                  <h6 class="text-center">Scan to Pay</h6>
+                  <img src="./images/qr.webp" alt="QR Basic" />
+                  <form class="payment-form" enctype="multipart/form-data" data-plan="Basic Plan">
+                    <div class="mb-2">
+                      <label for="nameBasic" class="form-label">Full Name</label>
+                      <input type="text" class="form-control" id="nameBasic" required />
+                    </div>
+                    <div class="mb-2">
+                      <label for="uploadBasic" class="form-label">Upload Screenshot</label>
+                      <input type="file" class="form-control" id="uploadBasic" accept="image/*" required />
+                    </div>
+                    <div class="mb-3">
+                      <label for="utrBasic" class="form-label">UTR Number</label>
+                      <input type="text" class="form-control" id="utrBasic" required />
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Submit Payment</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STANDARD PLAN -->
+          <div class="col-md-4">
+            <div class="card membership-card h-100">
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title text-center">Standard Plan</h5>
+                <p class="price text-center">₹1,299 / 3 Months</p>
+                <ul>
+                  <li>Access to gym equipment</li>
+                  <li>5 Group classes/week</li>
+                  <li>Free personal session</li>
+                </ul>
+                <button class="btn btn-primary mt-auto" data-bs-toggle="collapse" data-bs-target="#collapseStandard">Select Plan</button>
+
+                <div class="collapse payment-section" id="collapseStandard">
+                  <h6 class="text-center">Scan to Pay</h6>
+                  <img src="./images/qr.webp" alt="QR Standard" />
+                  <form class="payment-form" enctype="multipart/form-data" data-plan="Standard Plan">
+                    <div class="mb-2">
+                      <label for="nameStandard" class="form-label">Full Name</label>
+                      <input type="text" class="form-control" id="nameStandard" required />
+                    </div>
+                    <div class="mb-2">
+                      <label for="uploadStandard" class="form-label">Upload Screenshot</label>
+                      <input type="file" class="form-control" id="uploadStandard" accept="image/*" required />
+                    </div>
+                    <div class="mb-3">
+                      <label for="utrStandard" class="form-label">UTR Number</label>
+                      <input type="text" class="form-control" id="utrStandard" required />
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Submit Payment</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PREMIUM PLAN -->
+          <div class="col-md-4">
+            <div class="card membership-card h-100">
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title text-center">Premium Plan</h5>
+                <p class="price text-center">₹4,599 / Year</p>
+                <ul>
+                  <li>Unlimited group classes</li>
+                  <li>Monthly personal sessions</li>
+                  <li>Diet consultation</li>
+                </ul>
+                <button class="btn btn-primary mt-auto" data-bs-toggle="collapse" data-bs-target="#collapsePremium">Select Plan</button>
+
+                <div class="collapse payment-section" id="collapsePremium">
+                  <h6 class="text-center">Scan to Pay</h6>
+                  <img src="./images/qr.webp" alt="QR Premium" />
+                  <form class="payment-form" enctype="multipart/form-data" data-plan="Premium Plan">
+                    <div class="mb-2">
+                      <label for="namePremium" class="form-label">Full Name</label>
+                      <input type="text" class="form-control" id="namePremium" required />
+                    </div>
+                    <div class="mb-2">
+                      <label for="uploadPremium" class="form-label">Upload Screenshot</label>
+                      <input type="file" class="form-control" id="uploadPremium" accept="image/*" required />
+                    </div>
+                    <div class="mb-3">
+                      <label for="utrPremium" class="form-label">UTR Number</label>
+                      <input type="text" class="form-control" id="utrPremium" required />
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Submit Payment</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ELIGHT ANNUAL PLAN -->
+          <div class="col-md-4">
+            <div class="card membership-card h-100">
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title text-center">Elight Annual Plan</h5>
+                <p class="price text-center">₹15,599 / Year</p>
+                <ul>
+                  <li>Unlimited group classes</li>
+                  <li>Monthly personal sessions</li>
+                  <li>Diet consultation</li>
+                  <li>Access to VIP Lounge</li>
+                </ul>
+                <button class="btn btn-primary mt-auto" data-bs-toggle="collapse" data-bs-target="#collapseElight">Select Plan</button>
+
+                <div class="collapse payment-section" id="collapseElight">
+                  <h6 class="text-center">Scan to Pay</h6>
+                  <img src="./images/qr.webp" alt="QR Elight" />
+                  <form class="payment-form" enctype="multipart/form-data" data-plan="Elight Annual Plan">
+                    <div class="mb-2">
+                      <label for="nameElight" class="form-label">Full Name</label>
+                      <input type="text" class="form-control" id="nameElight" required />
+                    </div>
+                    <div class="mb-2">
+                      <label for="uploadElight" class="form-label">Upload Screenshot</label>
+                      <input type="file" class="form-control" id="uploadElight" accept="image/*" required />
+                    </div>
+                    <div class="mb-3">
+                      <label for="utrElight" class="form-label">UTR Number</label>
+                      <input type="text" class="form-control" id="utrElight" required />
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Submit Payment</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- COUPLE PLAN -->
+          <div class="col-md-4">
+            <div class="card membership-card h-100">
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title text-center">Couple Plan</h5>
+                <p class="price text-center">₹2,499 / 3 Months</p>
+                <ul>
+                  <li>Access for 2 people</li>
+                  <li>5 Group classes/week</li>
+                  <li>Free personal session for each</li>
+                  <li>Shared locker facility</li>
+                </ul>
+                <button class="btn btn-primary mt-auto" data-bs-toggle="collapse" data-bs-target="#collapseCouple">Select Plan</button>
+
+                <div class="collapse payment-section" id="collapseCouple">
+                  <h6 class="text-center">Scan to Pay</h6>
+                  <img src="./images/qr.webp" alt="QR Couple" />
+                  <form class="payment-form" enctype="multipart/form-data" data-plan="Couple Plan">
+                    <div class="mb-2">
+                      <label for="nameCouple" class="form-label">Full Name</label>
+                      <input type="text" class="form-control" id="nameCouple" required />
+                    </div>
+                    <div class="mb-2">
+                      <label for="uploadCouple" class="form-label">Upload Screenshot</label>
+                      <input type="file" class="form-control" id="uploadCouple" accept="image/*" required />
+                    </div>
+                    <div class="mb-3">
+                      <label for="utrCouple" class="form-label">UTR Number</label>
+                      <input type="text" class="form-control" id="utrCouple" required />
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Submit Payment</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="text-center text-white py-3">
+    <div class="container">
+      <p>Contact: gym@example.com | +91-1234567890</p>
+      <p>
+        <a href="#">Facebook</a> |
+        <a href="#">Instagram</a> |
+        <a href="#">Twitter</a>
+      </p>
+      <p>© 2025 FitGym | Stay Strong, Stay Fit</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Payment Form JS -->
+  <script>
+    document.querySelectorAll(".payment-form").forEach((form) => {
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const plan = form.getAttribute("data-plan");
+        const name = form.querySelector("input[type='text']").value.trim();
+        const utr = form.querySelector("input[id^='utr']").value.trim();
+        const screenshot = form.querySelector("input[type='file']").files[0];
+
+        if (!name || !utr || !screenshot) {
+          alert("Please fill all fields.");
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("utr", utr);
+        formData.append("screenshot", screenshot);
+        formData.append("plan", plan);
+
+        try {
+          const res = await fetch("http://localhost:5000/api/payments", {
+            method: "POST",
+            body: formData,
+          });
+
+          if (!res.ok) {
+            const errorData = await res.json();
+            alert("❌ " + (errorData.message || "Submission failed."));
+            return;
+          }
+
+          alert("✅ Payment submitted successfully!");
+          form.reset();
+        } catch (err) {
+          console.error(err);
+          alert("❌ Error submitting payment. Please try again.");
+        }
+      });
+    });
+  </script>
+</body>
+</html>

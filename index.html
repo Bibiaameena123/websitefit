@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gym Fitness</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Bootstrap Icons CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
+  <style>
+    /* --------- Global Styles --------- */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar-brand {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .sidebar {
+      background-color: #ffffff;
+      border-right: 1px solid #dee2e6;
+    }
+
+    .sidebar .list-group-item {
+      border: none;
+      border-left: 4px solid transparent;
+      padding: 0.75rem 1rem;
+      font-weight: 500;
+      transition: background-color 0.2s, border-left-color 0.2s;
+    }
+
+    .sidebar .list-group-item:hover {
+      background-color: #e9ecef;
+      border-left-color: #0d6efd;
+      color: #0d6efd;
+      text-decoration: none;
+    }
+
+    .sidebar .list-group-item.active {
+      background-color: #0d6efd;
+      border-left-color: #0d6efd;
+      color: #fff;
+    }
+
+    @media (min-width: 768px) {
+      .sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        padding-top: 1rem;
+      }
+    }
+
+    .hero {
+      background:
+        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        url('https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')
+        no-repeat center center;
+      background-size: cover;
+      padding: 80px 20px;
+      border-radius: 8px;
+      margin-bottom: 40px;
+      color: #fff;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero .btn {
+      font-size: 1rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+
+    .hero .btn:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
+    }
+
+    .about {
+      padding: 40px 0;
+    }
+
+    .about h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .about h2::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      background-color: #0d6efd;
+      margin: 10px auto 0;
+      border-radius: 2px;
+    }
+
+    .about p {
+      font-size: 1rem;
+      color: #555;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .services {
+      padding: 40px 0;
+    }
+
+    .services h2 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .services h2::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      background-color: #0d6efd;
+      margin: 10px auto 0;
+      border-radius: 2px;
+    }
+
+    .services .col-md-4 {
+      margin-bottom: 30px;
+    }
+
+    .services .col-md-4 h4 {
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .services .col-md-4 p {
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    #bmi-calculator {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-top: 40px;
+    }
+
+    #bmi-calculator h2 {
+      font-size: 1.75rem;
+      margin-bottom: 20px;
+      font-weight: 600;
+      color: #0d6efd;
+    }
+
+    #bmi-calculator input[type="number"] {
+      width: 120px;
+      max-width: 100%;
+      padding: 10px;
+      margin: 0 10px 20px 0;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    #bmi-calculator button {
+      background-color: #0d6efd;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 4px;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+
+    #bmi-calculator button:hover {
+      background-color: #0b5ed7;
+      transform: translateY(-1px);
+    }
+
+    #bmi-result {
+      font-size: 1.1rem;
+      margin-top: 15px;
+      font-weight: 500;
+      color: #333;
+    }
+
+    footer {
+      background-color: #212529;
+      color: #adb5bd;
+    }
+
+    footer a {
+      color: #adb5bd;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 767.98px) {
+      .hero {
+        padding: 60px 15px;
+      }
+      .hero h1 {
+        font-size: 2rem;
+      }
+      #bmi-calculator {
+        padding: 20px;
+      }
+      #bmi-calculator input[type="number"] {
+        width: 100%;
+        margin-right: 0 !important;
+        margin-bottom: 15px;
+      }
+      #bmi-calculator button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ===== Top Navbar ===== -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">FitGym</a>
+    </div>
+  </nav>
+
+  <!-- ===== Sidebar + Main Content ===== -->
+  <div class="container-fluid mt-4">
+    <div class="row">
+      <!-- Sidebar -->
+      <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" id="sidebarMenu">
+        <div class="position-sticky pt-3">
+          <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action active">Home</a>
+            <a href="#Services" class="list-group-item list-group-item-action">Services</a>
+            <a href="login.html" class="list-group-item list-group-item-action">Login</a>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Toggle Button -->
+      <button class="btn btn-primary d-md-none mb-3 ms-3" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu">
+        ☰ Menu
+      </button>
+
+      <!-- Main Content -->
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <header class="hero text-center">
+          <h1>Achieve Your Fitness Goals</h1>
+          <p>Join us and become the best version of yourself!</p>
+          <a href="login.html" class="btn btn-primary">Join Now</a>
+        </header>
+
+        <section class="about text-center">
+          <h2>About Us</h2>
+          <p>
+            FitGym is dedicated to helping you become the healthiest version of yourself.
+            Our team of expert trainers, modern equipment, and supportive community ensure
+            you find the motivation and guidance you need to reach your goals.
+          </p>
+        </section>
+
+        <section class="services text-center" id="Services">
+          <h2>Our Services</h2>
+          <div class="row">
+            <div class="col-md-4">
+              <h4>Personal Training</h4>
+              <p>Expert trainers to guide your fitness journey.</p>
+            </div>
+            <div class="col-md-4">
+              <h4>Modern Equipment</h4>
+              <p>State-of-the-art fitness machines for all needs.</p>
+            </div>
+            <div class="col-md-4">
+              <h4>Group Classes</h4>
+              <p>Fun and energetic workouts with fellow fitness enthusiasts.</p>
+            </div>
+          </div>
+        </section>
+   
+        <section class="text-center py-5 bg-light">
+  <h2 class="mb-4">What Our Members Say</h2>
+  <div class="row justify-content-center">
+    <div class="col-md-4 mb-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <p class="card-text">"Joining FitGym changed my life. The trainers are supportive, and the results speak for themselves!"</p>
+          <h5 class="card-title">– ronnie coleman</h5>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <p class="card-text">"Amazing atmosphere and top-notch equipment. I feel motivated every day."</p>
+          <h5 class="card-title">- Chris Bumstead</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  <!-- ===== Footer ===== -->
+ <!-- Add this inside your footer container just before closing </div> -->
+<footer class="bg-dark text-white pt-5 pb-4 mt-5">
+  <div class="container">
+    <div class="row">
+      <!-- Contact Info -->
+      <div class="col-md-6 mb-4">
+        <p><strong>Contact:</strong> gym@example.com</p>
+        <p><strong>Phone:</strong> +91-1234567890</p>
+        <p><strong>Follow Us:</strong></p>
+        <div class="mt-3">
+          <a href="https://facebook.com/trainer1" class="text-primary me-3" target="_blank"><i class="bi bi-facebook fs-4"></i></a>
+          <a href="https://instagram.com/trainer1" class="text-danger me-3" target="_blank"><i class="bi bi-instagram fs-4"></i></a>
+          <a href="https://linkedin.com/in/trainer1" class="text-info" target="_blank"><i class="bi bi-linkedin fs-4"></i></a>
+        </div>
+      </div>
+    <div class="text-center pt-3 mt-4 border-top border-secondary">
+      <p class="mb-0">© 2025 FitGym | Stay Strong, Stay Fit</p>
+    </div>
+  </div>
+</footer>
+
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

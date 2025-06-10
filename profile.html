@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>User Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .profile-card {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 30px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    .profile-card h2 {
+      margin-bottom: 20px;
+      color: #0d6efd;
+    }
+    .profile-item {
+      margin-bottom: 15px;
+    }
+    .label {
+      font-weight: 500;
+      color: #6c757d;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="profile-card">
+    <h2 class="text-center">User Profile</h2>
+    <div class="profile-item"><span class="label">Name:</span> <span id="name">Loading...</span></div>
+    <div class="profile-item"><span class="label">Email:</span> <span id="email">Loading...</span></div>
+    <div class="profile-item"><span class="label">Gender:</span> <span id="gender">Loading...</span></div>
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-danger mb-3" onclick="logout()">Logout</button>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  async function fetchProfile() {
+    try {
+      const token = localStorage.getItem('token'); // get JWT token from localStorage
+
+      if (!token) {
+        alert('You are not logged in.');
+        window.location.href = '/login.html'; // redirect to login if no token
+        return;
+      }
+
+      const response = await fetch('http://localhost:5000/api/users/profile', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) throw new Error('Failed to fetch profile');
+
+      const user = await response.json();
+      console.log('Fetched user profile:', user); // DEBUG: check actual response object
+
+      // Use name or fullname fallback; adjust to your backend fields
+      const userName = user.name || user.fullname || 'N/A';
+
+      document.getElementById('name').textContent = userName;
+      document.getElementById('email').textContent = user.email || 'N/A';
+      document.getElementById('gender').textContent = user.gender || 'N/A';
+
+    } catch (error) {
+      console.error('Error loading profile:', error);
+      alert('Could not load user profile.');
+      // Show N/A for all fields on error
+      document.getElementById('name').textContent = 'N/A';
+      document.getElementById('email').textContent = 'N/A';
+      document.getElementById('gender').textContent = 'N/A';
+    }
+  }
+
+  function logout() {
+    localStorage.removeItem('token'); // clear the JWT token
+    window.location.href = '/index.html'; // redirect to login page
+  }
+
+  // Call fetchProfile when the page loads
+  window.onload = fetchProfile;
+</script>
+
+</body>
+</html>

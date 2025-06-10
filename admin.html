@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Dashboard - FitGym</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"/>
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .sidebar {
+      height: 100vh;
+      background-color: #343a40;
+      position: sticky;
+      top: 0;
+    }
+    .sidebar .nav-link {
+      color: #adb5bd;
+    }
+    .sidebar .nav-link.active,
+    .sidebar .nav-link:hover {
+      color: #fff;
+      background-color: #495057;
+    }
+    .dashboard-content {
+      padding: 2rem;
+    }
+    .card-header {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <nav class="col-md-3 col-lg-2 d-md-block sidebar">
+      <div class="position-sticky pt-3">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="#"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#user-section"><i class="bi bi-people me-2"></i>Manage Users</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#payment-section"><i class="bi bi-cash-stack me-2"></i>Payments</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact-section"><i class="bi bi-envelope me-2"></i>Contact Submissions</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="col-md-9 ms-sm-auto col-lg-10 dashboard-content">
+      <h2 class="mb-4">Admin Dashboard</h2>
+
+      <!-- User Management -->
+      <section id="user-section" class="mb-5">
+        <div class="card">
+          <div class="card-header bg-secondary text-white">Manage Users</div>
+          <div class="card-body">
+            <form id="user-form" class="row g-3 mb-3">
+              <div class="col-md-3">
+                <input type="text" id="user-fullname" class="form-control" placeholder="Full Name" required />
+              </div>
+              <div class="col-md-3">
+                <input type="email" id="user-email" class="form-control" placeholder="Email" required />
+              </div>
+              <div class="col-md-2">
+                <select id="user-gender" class="form-select" required>
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="col-md-2">
+                <input type="password" id="user-password" class="form-control" placeholder="Password" required minlength="6" />
+              </div>
+              <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">Add User</button>
+                <button type="button" id="user-cancel-btn" class="btn btn-secondary w-100 mt-2 d-none">Cancel Edit</button>
+              </div>
+            </form>
+
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Full Name</th>
+                  <th>Email</th>
+                  <th>Gender</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="user-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Payment Submissions -->
+      <section id="payment-section" class="mb-5">
+        <div class="card">
+          <div class="card-header bg-dark text-white">Payment Submissions</div>
+          <div class="card-body">
+            <table class="table table-bordered bg-white">
+              <thead class="table-dark">
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>UTR</th>
+                  <th>Plan</th>
+                  <th>Screenshot</th>
+                </tr>
+              </thead>
+              <tbody id="paymentTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Submissions -->
+      <section id="contact-section" class="mb-5">
+        <div class="card">
+          <div class="card-header bg-info text-white">Contact Messages</div>
+          <div class="card-body">
+            <table class="table table-bordered bg-white">
+              <thead class="table-light">
+                <tr>
+                  <th>#</th>
+                  <th>Full Name</th>
+                  <th>Email</th>
+                  <th>Message</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="contactTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  const API_BASE = 'http://localhost:5000/api';
+  const userForm = document.getElementById('user-form');
+  const userTableBody = document.getElementById('user-table-body');
+  const userCancelBtn = document.getElementById('user-cancel-btn');
+
+  let userList = [];
+  let userEditId = null;
+
+  async function fetchUsers() {
+    try {
+      const res = await fetch(`${API_BASE}/users`);
+      const data = await res.json();
+      userList = data;
+      renderUserTable();
+    } catch (err) {
+      console.error('Error fetching users:', err);
+    }
+  }
+
+  function renderUserTable() {
+    userTableBody.innerHTML = '';
+    userList.forEach((u, index) => {
+      userTableBody.innerHTML += `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${u.fullname}</td>
+          <td>${u.email}</td>
+          <td>${u.gender}</td>
+          <td>
+            <button class="btn btn-sm btn-warning" onclick="startEditUser('${u._id}')">Edit</button>
+            <button class="btn btn-sm btn-danger" onclick="deleteUser('${u._id}')">Delete</button>
+          </td>
+        </tr>
+      `;
+    });
+  }
+
+  userForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fullname = document.getElementById('user-fullname').value.trim();
+    const email = document.getElementById('user-email').value.trim();
+    const gender = document.getElementById('user-gender').value;
+    const password = document.getElementById('user-password').value;
+
+    if (!fullname || !email || !gender || password.length < 6) return alert('Fill all fields and password must be 6+ chars.');
+
+    try {
+      if (userEditId) {
+        const res = await fetch(`${API_BASE}/users/${userEditId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fullname, email, gender, password }),
+        });
+        const updated = await res.json();
+        userList = userList.map(u => u._id === updated._id ? updated : u);
+        userEditId = null;
+        userCancelBtn.classList.add('d-none');
+      } else {
+        const res = await fetch(`${API_BASE}/users`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fullname, email, gender, password }),
+        });
+        const newUser = await res.json();
+        userList.push(newUser);
+      }
+
+      userForm.reset();
+      renderUserTable();
+    } catch (err) {
+      alert('Failed to save user');
+      console.error(err);
+    }
+  });
+
+  function startEditUser(id) {
+    const u = userList.find(u => u._id === id);
+    document.getElementById('user-fullname').value = u.fullname;
+    document.getElementById('user-email').value = u.email;
+    document.getElementById('user-gender').value = u.gender;
+    document.getElementById('user-password').value = '';
+    userEditId = id;
+    userCancelBtn.classList.remove('d-none');
+  }
+
+  userCancelBtn.addEventListener('click', () => {
+    userForm.reset();
+    userEditId = null;
+    userCancelBtn.classList.add('d-none');
+  });
+
+  async function deleteUser(id) {
+    if (!confirm('Delete user?')) return;
+    await fetch(`${API_BASE}/users/${id}`, { method: 'DELETE' });
+    userList = userList.filter(u => u._id !== id);
+    renderUserTable();
+  }
+
+  async function fetchPayments() {
+    try {
+      const res = await fetch(`${API_BASE}/payments`);
+      const payments = await res.json();
+      const tbody = document.getElementById('paymentTableBody');
+      tbody.innerHTML = '';
+      payments.forEach((p, index) => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${p.name}</td>
+            <td>${p.utr}</td>
+            <td>${p.plan}</td>
+            <td><a href="${API_BASE.replace('/api', '')}/uploads/${p.screenshot}" target="_blank">View</a></td>
+          </tr>
+        `;
+      });
+    } catch (err) {
+      console.error('Error fetching payments:', err);
+    }
+  }
+
+  async function fetchContacts() {
+    try {
+      const res = await fetch(`${API_BASE}/contacts`);
+      const contacts = await res.json();
+      const tbody = document.getElementById('contactTableBody');
+      tbody.innerHTML = '';
+      contacts.forEach((c, index) => {
+        // Use 'name' if available, else fallback to 'fullname', else 'N/A'
+        const displayName = c.name || c.fullname || 'N/A';
+        tbody.innerHTML += `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${displayName}</td>
+            <td>${c.email}</td>
+            <td>${c.message}</td>
+            <td>${new Date(c.createdAt).toLocaleString()}</td>
+          </tr>
+        `;
+      });
+    } catch (err) {
+      console.error('Error fetching contacts:', err);
+    }
+  }
+
+  // Expose these for inline onclick handlers
+  window.startEditUser = startEditUser;
+  window.deleteUser = deleteUser;
+
+  // Fetch data on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    fetchUsers();
+    fetchPayments();
+    fetchContacts();
+  });
+</script>
+</body>
+</html>
