@@ -337,7 +337,7 @@
         formData.append("plan", plan);
 
         try {
-          const res = await fetch("http://localhost:5000/api/payments", {
+          const res = await fetch("http://localhost: 10000", {
             method: "POST",
             body: formData,
           });
